@@ -77,6 +77,23 @@ export const SortingAlgorithmProvider = ({
     setArrayToSort(tempArray);
     setIsAnimationComplete(false);
     setIsSorting(false);
+
+    //to reset the aarray in mid way
+    const resetHighestBar = window.setTimeout(() => {
+      for (let i = resetHighestBar; i >= 0; i--) {
+        window.clearTimeout(i);
+      }
+    }, 0);
+
+    setTimeout(() => {
+      const arrayOfLines = document.getElementsByClassName(
+        "array-line"
+      ) as HTMLCollectionOf<HTMLElement>;
+      for (let i = 0; i < arrayOfLines.length; i++) {
+        arrayOfLines[i].classList.remove("bg-green-500");
+        arrayOfLines[i].classList.add("bg-purple-500");
+      }
+    }, 0);
   };
 
   //to start the sorting
@@ -112,6 +129,23 @@ export const SortingAlgorithmProvider = ({
         }
       }, index * inverseSpeed);
     });
+
+    const finalAnimation = animation.length * inverseSpeed;
+    setTimeout(() => {
+      Array.from(arrayOfLines).forEach((line) => {
+        line.classList.add("animate-pulse", "bg-green-500");
+        line.classList.remove("bg-purple-500");
+      });
+
+      setTimeout(() => {
+        Array.from(arrayOfLines).forEach((line) => {
+          line.classList.remove("animate-pulse", "bg-green-500");
+          line.classList.add("bg-purple-500");
+        });
+        setIsSorting(false);
+        setIsAnimationComplete(true);
+      }, 1000);
+    }, finalAnimation);
   };
 
   const value = {
