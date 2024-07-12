@@ -7,6 +7,7 @@ import { SelectAlgorithmOptionsType } from "@/lib/types";
 import { SortingAlgorithmType } from "@/lib/types";
 import { Select } from "@/components/ui/select";
 import { CirclePlay, RotateCcw } from "lucide-react";
+import { sortingAlgorithmsData } from "@/lib/constant";
 
 export default function Home() {
   const {
@@ -71,9 +72,46 @@ export default function Home() {
                 {requireReset ? (
                   <RotateCcw className="text-gray-400 h-8 w-8" />
                 ) : (
-                  <CirclePlay className="text-green-400 h-8 w-8" />
+                  <CirclePlay className="text-system-green60 h-8 w-8" />
                 )}
               </button>
+            </div>
+
+            <div className="hidden sm:flex absolute top-[120%] left-0 w-full">
+              <div className="flex w-full text-gray-400 p-4 rounded border border-system-purple20 bg-system-purple80 bg-opacity-10 gap-6">
+                <div className="flex flex-col items-start justify-start w-3/4">
+                  <h3 className="text-lg">
+                    {sortingAlgorithmsData[selectedAlgorithm].title}
+                  </h3>
+                  <p className="text-sm text-grey-500 pt-2">
+                    {sortingAlgorithmsData[selectedAlgorithm].description}
+                  </p>
+                </div>
+
+                <div className="flex flex-col items-start justify-start w-1/4 gap-2">
+                  <h3 className="text-lg">Time Complexity</h3>
+                  <div className="flex flex-col gap-2">
+                    <p className="flex w-full text-sm text-gray-500">
+                      <span className="w-28">Worst Case:</span>
+                      <span>
+                        {sortingAlgorithmsData[selectedAlgorithm].worstCase}
+                      </span>
+                    </p>
+                    <p className="flex w-full text-sm text-gray-500">
+                      <span className="w-28">Average Case:</span>
+                      <span>
+                        {sortingAlgorithmsData[selectedAlgorithm].averageCase}
+                      </span>
+                    </p>
+                    <p className="flex w-full text-sm text-gray-500">
+                      <span className="w-28">Best Case:</span>
+                      <span>
+                        {sortingAlgorithmsData[selectedAlgorithm].bestCase}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="relative h-[calc(100vh-66px)] w-full">
@@ -81,7 +119,7 @@ export default function Home() {
               {arrayToSort.map((value, index) => (
                 <div
                   key={index}
-                  className="array-line relative w-1 mx-0.5 shadow-lg opacity-70 rounded-lg bg-purple-400"
+                  className="array-line relative w-1 mx-0.5 shadow-lg opacity-70 rounded-lg bg-purple-500"
                   style={{ height: `${value}px` }}
                 ></div>
               ))}
