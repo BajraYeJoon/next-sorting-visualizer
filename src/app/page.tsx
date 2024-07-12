@@ -17,10 +17,19 @@ export default function Home() {
     selectedAlgorithm,
     setSelectedAlgorithm,
     requireReset,
+    resetArrayAndAnimation,
+    startAnimation,
   } = useSortingAlgorithmContext();
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedAlgorithm(e.target.value as SortingAlgorithmType);
+  };
+
+  const handlePlay = () => {
+    if (requireReset) {
+      resetArrayAndAnimation();
+      return;
+    }
   };
 
   console.log(selectedAlgorithm);

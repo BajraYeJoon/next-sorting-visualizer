@@ -1,7 +1,7 @@
 "use client";
 
 import { generateRandomNumber, MAX_ANIMATION_SPEED } from "@/lib/constant";
-import { SortingAlgorithmType } from "@/lib/types";
+import { AnimationArrayType, SortingAlgorithmType } from "@/lib/types";
 import {
   createContext,
   ReactNode,
@@ -22,7 +22,7 @@ interface SortingAlgorithmContextType {
   isAnimationComplete: boolean;
   setIsAnimationComplete: (isComplete: boolean) => void;
   resetArrayAndAnimation: () => void;
-  startAnimaiton: () => void;
+  startAnimation: (animation: AnimationArrayType) => void;
   requireReset: boolean;
 }
 
@@ -80,7 +80,39 @@ export const SortingAlgorithmProvider = ({
   };
 
   //to start the sorting
-  const startAnimaiton = () => {};
+  const startAnimation = (animation: AnimationArrayType) => {
+    setIsSorting(true);
+
+    const inverseSpeed = (1 / animationSpeed) * 200;
+    const arrayOfLines = document.getElementsByClassName(
+      "array-line"
+    ) as HTMLCollectionOf<HTMLElement>;
+
+    const updateClassList = (
+      indexes: number[],
+      toAddClassname: string,
+      removeClassName: string
+    ) => {
+      indexes.forEach((index) => {
+        arrayOfLines[index].classList.add(toAddClassname);
+        arrayOfLines[index].classList.remove(removeClassName);
+      });
+    };
+
+    animation.forEach(([values, isSwapping], index) => {
+      setTimeout(() => {
+        if (!isSwapping) {
+          updateClassList(values, "bg-green-500", "bg-purple-500");
+          setTimeout(() => {
+            updateClassList(values, "bg-purple-500", "bg-green-500");
+          }, inverseSpeed);
+        } else {
+          const [lineIndex, newHeight] = values;
+          arrayOfLines[lineIndex].style.height = `${newHeight}px`;
+        }
+      }, index * inverseSpeed);
+    });
+  };
 
   const value = {
     arrayToSort,
@@ -94,7 +126,7 @@ export const SortingAlgorithmProvider = ({
     isAnimationComplete,
     setIsAnimationComplete,
     resetArrayAndAnimation,
-    startAnimaiton,
+    startAnimation,
     requireReset,
   };
   return (
