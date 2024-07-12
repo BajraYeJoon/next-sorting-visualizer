@@ -6,6 +6,7 @@ import { algorithmsOptions } from "@/lib/constant";
 import { SelectAlgorithmOptionsType } from "@/lib/types";
 import { SortingAlgorithmType } from "@/lib/types";
 import { Select } from "@/components/ui/select";
+import { CirclePlay, RotateCcw } from "lucide-react";
 
 export default function Home() {
   const {
@@ -15,6 +16,7 @@ export default function Home() {
     setAnimationSpeed,
     selectedAlgorithm,
     setSelectedAlgorithm,
+    requireReset,
   } = useSortingAlgorithmContext();
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -46,6 +48,16 @@ export default function Home() {
                 onChange={handleSelectChange}
                 isDisabled={isSorting}
               />
+              <button
+                className="flex items-center justify-center"
+                onClick={() => {}}
+              >
+                {requireReset ? (
+                  <RotateCcw className="text-gray-400 h-8 w-8" />
+                ) : (
+                  <CirclePlay className="text-green-400 h-8 w-8" />
+                )}
+              </button>
             </div>
           </div>
           <div className="relative h-[calc(100vh-66px)] w-full">

@@ -23,6 +23,7 @@ interface SortingAlgorithmContextType {
   setIsAnimationComplete: (isComplete: boolean) => void;
   resetArrayAndAnimation: () => void;
   startAnimaiton: () => void;
+  requireReset: boolean;
 }
 
 const SortingAlgorithmContext = createContext<
@@ -43,6 +44,8 @@ export const SortingAlgorithmProvider = ({
     useState<number>(MAX_ANIMATION_SPEED);
   const [isAnimationComplete, setIsAnimationComplete] =
     useState<boolean>(false);
+
+  const requireReset = isAnimationComplete || isSorting;
 
   useEffect(() => {
     resetArrayAndAnimation();
@@ -92,6 +95,7 @@ export const SortingAlgorithmProvider = ({
     setIsAnimationComplete,
     resetArrayAndAnimation,
     startAnimaiton,
+    requireReset,
   };
   return (
     <SortingAlgorithmContext.Provider value={value}>
