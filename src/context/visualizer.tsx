@@ -1,8 +1,14 @@
 "use client";
 
-import { MAX_ANIMATION_SPEED } from "@/lib/constant";
+import { generateRandomNumber, MAX_ANIMATION_SPEED } from "@/lib/constant";
 import { SortingAlgorithmType } from "@/lib/types";
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 interface SortingAlgorithmContextType {
   arrayToSort: number[];
@@ -28,9 +34,7 @@ export const SortingAlgorithmProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [arrayToSort, setArrayToSort] = useState<number[]>([
-    100, 200, 300, 251, 150, 50, 350,
-  ]);
+  const [arrayToSort, setArrayToSort] = useState<number[]>([]);
   const [selectedAlgorithm, setSelectedAlgorithm] =
     useState<SortingAlgorithmType>("BUBBLE");
 
@@ -40,8 +44,37 @@ export const SortingAlgorithmProvider = ({
   const [isAnimationComplete, setIsAnimationComplete] =
     useState<boolean>(false);
 
+  useEffect(() => {
+    resetArrayAndAnimation();
+
+    window.addEventListener("resize", resetArrayAndAnimation);
+
+    return () => {
+      window.removeEventListener("resize", resetArrayAndAnimation);
+    };
+  }, []);
+
   //to reset the array
-  const resetArrayAndAnimation = () => {};
+  const resetArrayAndAnimation = () => {
+    const contentContainer = document.getElementById("content-container");
+
+    if (!contentContainer) return;
+
+    const contentContainerWidth = contentContainer.clientWidth;
+    const tempArray: number[] = [];
+    const numberofBars = Math.floor(contentContainerWidth / 8);
+    const contentContainerHeight = window.innerHeight;
+    const maxBarHeight = Math.max(contentContainerHeight - 400, 100);
+
+    //to populate the array
+    for (let bar = 0; bar < numberofBars; bar++) {
+      tempArray.push(generateRandomNumber(35, maxBarHeight));
+    }
+
+    setArrayToSort(tempArray);
+    setIsAnimationComplete(false);
+    setIsSorting(false);
+  };
 
   //to start the sorting
   const startAnimaiton = () => {};
