@@ -7,10 +7,6 @@ export default function Home() {
   const { arrayToSort, animationSpeed, isSorting, setAnimationSpeed } =
     useSortingAlgorithmContext();
 
-  useEffect(() => {
-    console.log("animationSpeed", animationSpeed);
-  }, [animationSpeed]);
-
   return (
     <main className="absolute top-0 h-screen w-screen z-[-2] bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#150229_1px)] bg-[size:40px_40px]">
       <div className="flex h-full justify-center">
@@ -22,10 +18,10 @@ export default function Home() {
             <h1 className="text-gray-300 text-2xl font-light hidden md:flex">
               Sorting Visulizer
             </h1>
-            <div className="flex items-center justify-center max-w-[1280px] gap-4 bg-white">
+            <div className="flex items-center justify-center gap-4 b">
               <Slider
-                disabled={isSorting}
-                value={[animationSpeed]}
+                isDisabled={isSorting}
+                value={animationSpeed}
                 handleChange={(e) => setAnimationSpeed(Number(e.target.value))}
               />
             </div>
