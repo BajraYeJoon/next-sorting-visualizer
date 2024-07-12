@@ -1,9 +1,10 @@
-enum SortingAlgorithm {
-  BUBBLE = "bubble",
-  SELECTION = "selection",
-  INSERTION = "insertion",
-  MERGE = "merge",
-  QUICK = "quick",
-}
-
-export type SortingAlgorithmType = keyof typeof SortingAlgorithm;
+export type SortingAlgorithmType =
+  | "bubble"
+  | "insertion"
+  | "selection"
+  | "quick"
+  | "merge";
+export type SelectAlgorithmOptionsType = {
+  label: string;
+  value: SortingAlgorithmType;
+};
