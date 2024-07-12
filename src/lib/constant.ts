@@ -1,3 +1,4 @@
+import { bubbleSortAnimation } from "@/algo/bubbleSort";
 import { AnimationArrayType, SortingAlgorithmType } from "./types";
 
 export const MIN_ANIMATION_SPEED = 100;
@@ -26,6 +27,7 @@ export function generateAlgorithmAnimation(
 ) {
   switch (selectedAlgorithm) {
     case "bubble":
+      bubbleSortAnimation(isSorting, array, startAnimation);
       break;
 
     default:

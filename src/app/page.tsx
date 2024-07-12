@@ -2,7 +2,7 @@
 
 import { Slider } from "@/components/ui/slider";
 import { useSortingAlgorithmContext } from "@/context/visualizer";
-import { algorithmsOptions } from "@/lib/constant";
+import { algorithmsOptions, generateAlgorithmAnimation } from "@/lib/constant";
 import { SelectAlgorithmOptionsType } from "@/lib/types";
 import { SortingAlgorithmType } from "@/lib/types";
 import { Select } from "@/components/ui/select";
@@ -30,6 +30,13 @@ export default function Home() {
       resetArrayAndAnimation();
       return;
     }
+
+    generateAlgorithmAnimation(
+      selectedAlgorithm,
+      isSorting,
+      arrayToSort,
+      startAnimation
+    );
   };
 
   console.log(selectedAlgorithm);
@@ -59,7 +66,7 @@ export default function Home() {
               />
               <button
                 className="flex items-center justify-center"
-                onClick={() => {}}
+                onClick={handlePlay}
               >
                 {requireReset ? (
                   <RotateCcw className="text-gray-400 h-8 w-8" />
